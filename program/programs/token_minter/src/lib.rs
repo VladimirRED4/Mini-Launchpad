@@ -170,8 +170,13 @@ fn compute_fee_lamports(mint_fee_usd: u64, price: u64) -> Result<u64> {
     // Both `mint_fee_usd` and `price` use 6 decimal places, so the formula is:
     // fee_lamports = mint_fee_usd * LAMPORTS_PER_SOL / price
     // Keep the integer math and overflow protection from the production version.
-    let _ = (mint_fee_usd, price);
-    todo!("student task: implement fee conversion");
+    // let _ = (mint_fee_usd, price);
+    // todo!("student task: implement fee conversion");
+    let numerator = (mint_fee_usd as u128).checked_mul(LAMPORTS_PER_SOL_U64 as u128)
+        .ok_or(MinterError::MathOverflow)?;
+    let fee_lamports = numerator.checked_div(price as u128)
+        .ok_or(MinterError::MathOverflow)?;
+    Ok(fee_lamports as u64)
 }
 
 #[derive(Accounts)]
