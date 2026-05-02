@@ -306,8 +306,35 @@ fn to_fixed_6(txt: &str) -> Result<u64> {
     // - "120.12" -> 120_120_000
     // - "0.000001" -> 1
     // Extra digits after the 6th decimal place should be truncated, not rounded.
-    let _ = txt;
-    todo!("student task: implement fixed-6 parser")
+    // let _ = txt;
+    // todo!("student task: implement fixed-6 parser")
+    
+    // Split into integer and fractional parts
+    let (int_part, frac_part) = match txt.find('.') {
+        Some(pos) => (&txt[..pos], &txt[pos + 1..]),
+        None => (txt, ""),
+    };
+    
+    // Parse integer part
+    let int_val: u64 = int_part
+        .parse()
+        .map_err(|_| anyhow!("Invalid integer part: {}", int_part))?;
+    
+    // Process fractional part: take first 6 digits, pad with zeros
+    let mut frac_digits = frac_part.chars().take(6).collect::<String>();
+    while frac_digits.len() < 6 {
+        frac_digits.push('0');
+    }
+    
+    let frac_val: u64 = if frac_digits.is_empty() {
+        0
+    } else {
+        frac_digits
+            .parse()
+            .map_err(|_| anyhow!("Invalid fractional part: {}", frac_part))?
+    };
+    
+    Ok(int_val * 1_000_000 + frac_val)
 }
 
 #[cfg(test)]
@@ -340,8 +367,10 @@ mod tests {
     fn to_fixed_6_truncates_fraction_to_six_digits() {
         // TODO(student): this assertion is intentionally wrong.
         // The parser is expected to truncate after 6 digits instead of rounding.
-        assert_eq!(to_fixed_6("1.1234569").unwrap(), 1_123_457);
+        assert_eq!(to_fixed_6("1.1234569").unwrap(), 1_123_456);
     }
+
+
 
     #[test]
     fn to_fixed_6_rejects_invalid_input() {

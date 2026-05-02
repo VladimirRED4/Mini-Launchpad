@@ -6,12 +6,12 @@ resolution = true
 skip-lint = false
 
 [programs.localnet]
-sol_usd_oracle = "4cuvLFFqhaKnTHfeq2FtTUvgudRSe7wq982fA9PBUqBU"
-token_minter = "E5erGzaxgCwHqH7RjLXLGWziXj8CXpyN7zW6BRodfFnE"
+sol_usd_oracle = "3QCqmWfxCZsnQcvKK1MPzGYDXGnRzKz4rgYpwjnNZTQh"
+token_minter = "8TXKBDBJXhcvkZCyAyvV9Jv7AkQfADf3ZzkEFG7XJ5gM"
 
 [programs.devnet]
-sol_usd_oracle = "4cuvLFFqhaKnTHfeq2FtTUvgudRSe7wq982fA9PBUqBU"
-token_minter = "E5erGzaxgCwHqH7RjLXLGWziXj8CXpyN7zW6BRodfFnE"
+sol_usd_oracle = "3QCqmWfxCZsnQcvKK1MPzGYDXGnRzKz4rgYpwjnNZTQh"
+token_minter = "8TXKBDBJXhcvkZCyAyvV9Jv7AkQfADf3ZzkEFG7XJ5gM"
 
 [registry]
 url = "https://api.apr.dev"
