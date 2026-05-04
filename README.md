@@ -124,6 +124,12 @@
 
 - **Program ID**: `8TXKBDBJXhcvkZCyAyvV9Jv7AkQfADf3ZzkEFG7XJ5gM`
 
-### Token Minter в Devnet
+### Ссылки на транзакции mint в Devnet
 
-`https://explorer.solana.com/address/8TXKBDBJXhcvkZCyAyvV9Jv7AkQfADf3ZzkEFG7XJ5gM?cluster=devnet`
+`https://explorer.solana.com/address/AfvXTg5azbyRPEewAEM27tHGwckoCCBBqjUaQStKfkJ6?cluster=devnet`
+`https://explorer.solana.com/address/H3njRLSJ9KHemp45CYpf7JSrSneMrjpvkALHopLRdYF5?cluster=devnet`
+
+```text
+AfvXTg5azbyRPEewAEM27tHGwckoCCBBqjUaQStKfkJ6
+H3njRLSJ9KHemp45CYpf7JSrSneMrjpvkALHopLRdYF5
+```
