@@ -1,7 +1,7 @@
 use anchor_lang::{prelude::*, system_program};
 use anchor_spl::{
     associated_token::AssociatedToken,
-    token::{self, Mint, MintTo, Token, TokenAccount},
+    token::{self, Mint, MintTo, Token, TokenAccount, ID as TOKEN_PROGRAM_ID},
 };
 use mpl_token_metadata::{
     instructions::CreateMetadataAccountV3CpiBuilder,
@@ -76,6 +76,10 @@ pub mod token_minter {
         require!(
             current_slot <= oracle_state.last_updated_slot + MAX_PRICE_AGE_SLOTS,
             MinterError::OraclePriceStale
+        );
+        require!(
+            ctx.accounts.token_program.key() == TOKEN_PROGRAM_ID,
+            MinterError::InvalidTokenProgram
         );
 
         let fee_lamports = compute_fee_lamports(ctx.accounts.config.mint_fee_usd, oracle_state.price)?;
@@ -320,4 +324,7 @@ pub enum MinterError {
     MetadataCpiFailed,
     #[msg("Oracle price is stale (too old)")]
     OraclePriceStale,
+    #[msg("Invalid SPL Token program")]
+    InvalidTokenProgram,
+
 }
