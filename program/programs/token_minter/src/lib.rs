@@ -12,6 +12,7 @@ use sol_usd_oracle::{state::OracleState, PRICE_DECIMALS};
 
 pub const USD_DECIMALS: u8 = 6;
 pub const LAMPORTS_PER_SOL_U64: u64 = 1_000_000_000;
+pub const MAX_PRICE_AGE_SLOTS: u64 = 100;
 
 declare_id!("8TXKBDBJXhcvkZCyAyvV9Jv7AkQfADf3ZzkEFG7XJ5gM");
 
@@ -68,6 +69,13 @@ pub mod token_minter {
         require!(
             oracle_state.decimals == PRICE_DECIMALS,
             MinterError::OracleDecimalsMismatch
+        );
+
+        // НОВАЯ ПРОВЕРКА: цена не устарела
+        let current_slot = Clock::get()?.slot;
+        require!(
+            current_slot <= oracle_state.last_updated_slot + MAX_PRICE_AGE_SLOTS,
+            MinterError::OraclePriceStale
         );
 
         let fee_lamports = compute_fee_lamports(ctx.accounts.config.mint_fee_usd, oracle_state.price)?;
@@ -310,4 +318,6 @@ pub enum MinterError {
     InvalidMetadataPda,
     #[msg("Metaplex create metadata CPI failed")]
     MetadataCpiFailed,
+    #[msg("Oracle price is stale (too old)")]
+    OraclePriceStale,
 }
